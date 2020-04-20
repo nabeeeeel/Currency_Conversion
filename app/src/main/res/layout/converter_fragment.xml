@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="119dp"
+        android:layout_marginRight="119dp"
+        android:text="Marvel Comics"
+        android:textSize="30sp" />
+
+
+    <RadioGroup
+        android:layout_width="203dp"
+        android:layout_height="276dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="91dp"
+        android:layout_marginLeft="91dp"
+        android:layout_marginTop="130dp">
+
+        <RadioButton
+            android:id="@+id/rbSuperman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Incredible Hulk" />
+
+        <RadioButton
+            android:id="@+id/rbWonderWoman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wolverine" />
+
+        <RadioButton
+            android:id="@+id/rbShazam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thor" />
+    </RadioGroup>
+
+</RelativeLayout>
