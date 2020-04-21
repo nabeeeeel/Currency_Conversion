@@ -1,6 +1,8 @@
 package com.testname.favoritefragmentfun;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,12 +25,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.util.Objects;
+import java.util.Locale;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ConverterFragment extends Fragment {
 
@@ -39,16 +40,25 @@ public class ConverterFragment extends Fragment {
             targetType = "Select desired currency…";
     private EditText editText;
     private TextView text;
-    double result;
-    private static final double EURO = 1;
-    View view;
+    private float result;
+    private static final float EURO = 1.0f;
+    private View view;
 
-    RequestQueue requestQueue = null;
+    private static final String TARGET_SPINNER = "RESULT_T";
+    private static final String INPUT_SPINNER = "INPUT_T";
+    private static final String INPUT = "INPUT";
+    private static final String TEXT = "TEXT";
+    private Context mContext;
+
+    private RequestQueue requestQueue = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+
+        SharedPreferences settings = getActivity().getPreferences(MODE_PRIVATE);
+
         view = inflater.inflate(R.layout.converter_fragment,
                 container, false);
 
@@ -75,7 +85,6 @@ public class ConverterFragment extends Fragment {
 
         });
 
-
         // set up target spinner
         targetSpinner = view.findViewById(R.id.targetSpinner);
         // create adapter with spinner items
@@ -98,8 +107,8 @@ public class ConverterFragment extends Fragment {
 
         });
 
-        text = (TextView) view.findViewById(R.id.textView);
-        editText = (EditText) view.findViewById(R.id.toConvertText);
+        text = view.findViewById(R.id.textView);
+        editText = view.findViewById(R.id.toConvertText);
 
         Button mainButton = view.findViewById(R.id.button);
         mainButton.setOnClickListener(new View.OnClickListener() {
@@ -114,18 +123,29 @@ public class ConverterFragment extends Fragment {
                         Toast toast = Toast.makeText(getActivity(), "Input amount to convert…", Toast.LENGTH_SHORT);
                         toast.show();
                     } else {// get number to convert
-                        double result = calculate((initialType.split(" "))[0], targetType, Double.parseDouble(editText.getText().toString()));
+                        calculate((initialType.split(" "))[0], targetType, Float.parseFloat(editText.getText().toString()));
 
                     }
                 }
             }
         });
 
+
+        int initialSpinnerPosition = initialAdapter.getPosition(settings.getString(INPUT_SPINNER, initialType));
+        initialSpinner.setSelection(initialSpinnerPosition);
+
+        int targetSpinnerPosition = targetAdapter.getPosition(settings.getString(TARGET_SPINNER, targetType));
+        targetSpinner.setSelection(targetSpinnerPosition);
+
+        editText.setText(settings.getString(INPUT,""));
+
+        text.setText(settings.getString(TEXT, "Select a Currency to convert to and from"));
+
         return view;
 
     }//end onCreateView
 
-    private double calculate(final String from, final String to, final double startingNumber) {
+    private void calculate(final String from, final String to, final float startingNumber) {
 
         String url = "http://data.fixer.io/api/latest?access_key="
                 +  getString(R.string.api_key)
@@ -134,7 +154,7 @@ public class ConverterFragment extends Fragment {
                 + to;
 
         requestQueue = Volley.newRequestQueue(getActivity());
-        if (getActivity() == null) return 1.11;
+        if (getActivity() == null) return;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
@@ -148,14 +168,14 @@ public class ConverterFragment extends Fragment {
                            JSONObject element = response.getJSONObject("rates");
 
 
-                           double baseInitial = Double.parseDouble(element.getString(from));
-                           double baseResult = Double.parseDouble(element.getString(to));
+                           float baseInitial = Float.parseFloat(element.getString(from));
+                           float baseResult = Float.parseFloat(element.getString(to));
 
-                           double baseInitialCoversionCoefficient = EURO / baseInitial;
-                           result = startingNumber * baseInitialCoversionCoefficient;
+                           float baseInitialConversionCoefficient = EURO / baseInitial;
+                           result = startingNumber * baseInitialConversionCoefficient;
                            result *= baseResult;
 
-                            text.setText(String.format("%.2f %s", result, to));
+                            text.setText(String.format(Locale.US, "%.2f %s", result, to));
 
 
                         } catch (JSONException ex) {
@@ -173,11 +193,29 @@ public class ConverterFragment extends Fragment {
                     }
                 }
         );
-
         requestQueue.add(jsonObjectRequest);
-
-
-
-        return result;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(INPUT_SPINNER, initialType);
+        outState.putString(TARGET_SPINNER, targetType);
+        outState.putString(INPUT, editText.getText().toString());
+        outState.putString(TEXT, text.getText().toString());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences settings = getActivity().getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(INPUT_SPINNER, initialType);
+        editor.putString(TARGET_SPINNER, targetType);
+        editor.putString(INPUT, editText.getText().toString());
+        editor.putString(TEXT, text.getText().toString());
+
+        editor.apply();
+    }
+
 }

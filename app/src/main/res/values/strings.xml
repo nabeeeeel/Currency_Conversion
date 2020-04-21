@@ -2,6 +2,8 @@
     <string name="app_name">Conversion App</string>
     <string name="menu_converter">Converter</string>
     <string name="menu_calculator">Calculate</string>
+    <string name="convert">Convert</string>
+    <string name="select_a_currency_to_convert_to_and_from">Select a Currency to convert to and from</string>
 
 
     <string-array name="conversionsFrom">
