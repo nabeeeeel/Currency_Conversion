@@ -2,4 +2,27 @@
     <string name="app_name">Conversion App</string>
     <string name="menu_converter">Converter</string>
     <string name="menu_calculator">Calculate</string>
+
+
+    <string-array name="conversionsFrom">
+        <item>Select initial currency…</item>
+        <item>EUR to</item>
+        <item>USD to</item>
+        <item>CAD to</item>
+        <item>AUD to</item>
+        <item>CNY to</item>
+        <item>JPY to</item>
+    </string-array>
+
+    <string-array name="conversionsTo">
+        <item>Select desired currency…</item>
+        <item>EUR</item>
+        <item>USD</item>
+        <item>CAD</item>
+        <item>AUD</item>
+        <item>CNY</item>
+        <item>JPY</item>
+    </string-array>
+
 </resources>
+

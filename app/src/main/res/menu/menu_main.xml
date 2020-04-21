@@ -2,10 +2,12 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_marvel"
-          android:title="@string/menu_converter"
-          app:showAsAction="never"></item>
-    <item android:id="@+id/menu_dc"
+    <item
+        android:id="@+id/menu_converter"
+        android:title="@string/menu_converter"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_calculator"
         android:title="@string/menu_calculator"
-        app:showAsAction="never"></item>
+        app:showAsAction="never" />
 </menu>
