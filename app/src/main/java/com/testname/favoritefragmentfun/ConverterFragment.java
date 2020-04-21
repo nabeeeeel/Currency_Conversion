@@ -42,7 +42,6 @@ public class ConverterFragment extends Fragment {
     private TextView text;
     private float result;
     private static final float EURO = 1.0f;
-    private View view;
 
     private static final String TARGET_SPINNER = "RESULT_T";
     private static final String INPUT_SPINNER = "INPUT_T";
@@ -59,7 +58,7 @@ public class ConverterFragment extends Fragment {
 
         SharedPreferences settings = getActivity().getPreferences(MODE_PRIVATE);
 
-        view = inflater.inflate(R.layout.converter_fragment,
+        View view = inflater.inflate(R.layout.converter_fragment,
                 container, false);
 
 
