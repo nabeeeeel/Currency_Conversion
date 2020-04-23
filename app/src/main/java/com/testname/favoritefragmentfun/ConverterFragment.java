@@ -36,8 +36,8 @@ public class ConverterFragment extends Fragment {
 
     private Spinner initialSpinner,
             targetSpinner;
-    private String initialType = "Select initial currency…",
-            targetType = "Select desired currency…";
+            private String initialType = "Select initial currency…",
+                    targetType = "Select desired currency…";
     private EditText editText;
     private TextView text;
     private float result;

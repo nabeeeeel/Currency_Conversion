@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             SharedPreferences settings = getPreferences(MODE_PRIVATE);
             current = settings.getInt(CURRENT, CONV);
-            setFragment();
+             setFragment();
         }
     }//end onCreate
 
