@@ -38,8 +38,8 @@ public class CalculatorFragment extends Fragment {
     private Spinner initialSpinner,
             targetSpinner;
     Spinner symbolSpinner;
-    private String initialType = "Select initial currency…",
-            targetType = "Select desired currency…",
+    private String initialType = "Select currency…",
+            targetType = "Select currency…",
             symbol = "+";
     private EditText op1Text, op2Text;
     private TextView text;
@@ -73,7 +73,7 @@ public class CalculatorFragment extends Fragment {
         final ArrayAdapter<String> initialAdapter = new ArrayAdapter<String>(
                 view.getContext(),
                 R.layout.spinner_resource,
-                getResources().getStringArray(R.array.conversionsFrom)
+                getResources().getStringArray(R.array.typeOf)
         );
         initialAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         initialSpinner.setAdapter(initialAdapter);
@@ -95,7 +95,7 @@ public class CalculatorFragment extends Fragment {
         final ArrayAdapter<String> targetAdapter = new ArrayAdapter<String>(
                 view.getContext(),
                 R.layout.spinner_resource,
-                getResources().getStringArray(R.array.conversionsTo)
+                getResources().getStringArray(R.array.typeOf)
         );
         targetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         targetSpinner.setAdapter(targetAdapter);
@@ -111,8 +111,9 @@ public class CalculatorFragment extends Fragment {
 
         });
 
-        symbolSpinner = (Spinner) view.findViewById(R.id.spinner);
 
+        // set up symbol spinner
+        symbolSpinner = (Spinner) view.findViewById(R.id.spinner);
         final ArrayAdapter<String> symbolAdapter = new ArrayAdapter<String>(
                 view.getContext(),
                 R.layout.spinner_resource,
@@ -131,6 +132,7 @@ public class CalculatorFragment extends Fragment {
 
         });
 
+
         text = view.findViewById(R.id.textView);
         op1Text = view.findViewById(R.id.toConvert1Text);
         op2Text = view.findViewById(R.id.toConvert2Text);
@@ -140,8 +142,8 @@ public class CalculatorFragment extends Fragment {
             @SuppressLint("DefaultLocale")
             @Override
             public void onClick(View v) {
-                if (initialType.equals("Select initial currency…") || targetType.equals("Select desired currency…")) {
-                    Toast toast = Toast.makeText(getActivity(), "Select initial and desired currency…", Toast.LENGTH_SHORT);
+                if (initialType.equals("Select currency…") || targetType.equals("Select currency…")) {
+                    Toast toast = Toast.makeText(getActivity(), "Select currencies…", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
                     if ((op1Text.getText().toString()).equals("") || op2Text.getText().toString().equals("")) {
@@ -170,7 +172,7 @@ public class CalculatorFragment extends Fragment {
 
         op1Text.setText(settings.getString(INPUT2,""));
 
-        text.setText(settings.getString(TEXT2, "Select a Currency to convert to and from"));
+        text.setText(settings.getString(TEXT2, "Select currencies to add. The second one is the final currency"));
 
         op2Text.setText(settings.getString(INPUT22, ""));
 
