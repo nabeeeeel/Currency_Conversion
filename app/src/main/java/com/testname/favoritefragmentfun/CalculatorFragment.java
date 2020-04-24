@@ -146,7 +146,10 @@ public class CalculatorFragment extends Fragment {
                     Toast toast = Toast.makeText(getActivity(), "Select currencies…", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-                    if ((op1Text.getText().toString()).equals("") || op2Text.getText().toString().equals("")) {
+                    if ((op1Text.getText().toString().equals("") ||
+                            op1Text.getText().toString().equals(".") ||
+                            op2Text.getText().toString().equals("") ||
+                            op2Text.getText().toString().equals("."))) {
                         Toast toast = Toast.makeText(getActivity(), "Input amounts convert…", Toast.LENGTH_SHORT);
                         toast.show();
                     } else {// get number to convert

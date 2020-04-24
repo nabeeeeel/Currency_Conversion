@@ -118,7 +118,7 @@ public class ConverterFragment extends Fragment {
                     Toast toast = Toast.makeText(getActivity(), "Select initial and desired currency…", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-                    if ((editText.getText().toString()).equals("")) {
+                    if ((editText.getText().toString()).equals("") || (editText.getText().toString()).equals(".")) {
                         Toast toast = Toast.makeText(getActivity(), "Input amount to convert…", Toast.LENGTH_SHORT);
                         toast.show();
                     } else {// get number to convert
