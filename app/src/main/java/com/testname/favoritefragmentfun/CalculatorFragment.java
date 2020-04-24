@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -211,6 +212,8 @@ public class CalculatorFragment extends Fragment {
                             else result -= second;
 
                             text.setText(String.format(Locale.US, "%.2f %s", result, to));
+                            text.setGravity(Gravity.CENTER_HORIZONTAL);
+
 
 
                         } catch (JSONException ex) {

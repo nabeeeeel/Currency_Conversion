@@ -19,17 +19,16 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_width="222dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="52dp"
+        android:gravity="center"
         android:text="@string/select_a_currency_to_convert_to_and_from"
-        android:textSize="30sp"
         android:textAlignment="center"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        android:gravity="center_horizontal" />
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
     <Button
         android:id="@+id/button"
