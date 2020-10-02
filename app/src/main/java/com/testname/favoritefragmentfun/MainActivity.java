@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // if savedInstance is not null, we create everything
         if (savedInstanceState == null) {
             converterFragment = new ConverterFragment();
             calculatorFragment = new CalculatorFragment();
@@ -41,13 +42,14 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.add(R.id.placeHolderLayout, converterFragment);
             //commit the change
             fragmentTransaction.commit();
-        } else {
+        } else { // we set up using the current fragment
             SharedPreferences settings = getPreferences(MODE_PRIVATE);
             current = settings.getInt(CURRENT, CONV);
              setFragment();
         }
     }//end onCreate
 
+    // prefs
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction =
                 fragmentManager.beginTransaction();
 
+        // current keeps track of which fragment we are currently on
+        // this is for prefs so we can open it on load when we need too
         if(item.getItemId() == R.id.menu_converter) {
             fragmentTransaction.replace(R.id.placeHolderLayout,
                     converterFragment);
@@ -114,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         setFragment();
     }
 
+    // sets fragment on load, if we are loaded into another fragment
     private void setFragment() {
 
         FragmentManager fragmentManager =

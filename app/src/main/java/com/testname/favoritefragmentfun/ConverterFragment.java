@@ -84,6 +84,13 @@ public class ConverterFragment extends Fragment {
 
         });
 
+        // for spinners
+        // create spinner
+        // create spinner adapter, set it up with defaults and then link it to a string-array
+        // add the adapter to the spinner
+        // set up on item selected
+
+
         // set up target spinner
         targetSpinner = view.findViewById(R.id.targetSpinner);
         // create adapter with spinner items
@@ -106,9 +113,11 @@ public class ConverterFragment extends Fragment {
 
         });
 
+        // Text / Edit Text
         text = view.findViewById(R.id.textView);
         editText = view.findViewById(R.id.toConvertText);
 
+        // Button
         Button mainButton = view.findViewById(R.id.button);
         mainButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("DefaultLocale")
@@ -130,6 +139,7 @@ public class ConverterFragment extends Fragment {
         });
 
 
+        // after everything is made, fill in our components with prefs
         int initialSpinnerPosition = initialAdapter.getPosition(settings.getString(INPUT_SPINNER, initialType));
         initialSpinner.setSelection(initialSpinnerPosition);
 
@@ -144,8 +154,10 @@ public class ConverterFragment extends Fragment {
 
     }//end onCreateView
 
+    // takes in components for api call and value to convert
     private void calculate(final String from, final String to, final float startingNumber) {
 
+        // grabs API key from folder, From is a currency code (ex: USD) and so it to
         String url = "http://data.fixer.io/api/latest?access_key="
                 +  getString(R.string.api_key)
                 +  "&symbols="
@@ -166,6 +178,9 @@ public class ConverterFragment extends Fragment {
 
                            JSONObject element = response.getJSONObject("rates");
 
+                            // Get conversion rate to EURO's from both of the currencies
+                            // then we divide the first one by 1 so we get the rate from EURO's to the currency
+                            // next we multiply the number we started with by that number to get it into the second units
 
                            float baseInitial = Float.parseFloat(element.getString(from));
                            float baseResult = Float.parseFloat(element.getString(to));

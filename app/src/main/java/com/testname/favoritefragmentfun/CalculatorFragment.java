@@ -89,6 +89,12 @@ public class CalculatorFragment extends Fragment {
 
         });
 
+        // for spinners
+        // create spinner
+        // create spinner adapter, set it up with defaults and then link it to a string-array
+        // add the adapter to the spinner
+        // set up on item selected
+
         // set up target spinner
         targetSpinner = view.findViewById(R.id.targetSpinner);
         // create adapter with spinner items
@@ -132,20 +138,22 @@ public class CalculatorFragment extends Fragment {
 
         });
 
-
+        // grab texts / inputs
         text = view.findViewById(R.id.textView);
         op1Text = view.findViewById(R.id.toConvert1Text);
         op2Text = view.findViewById(R.id.toConvert2Text);
 
+        // set up button
         Button mainButton = view.findViewById(R.id.button);
         mainButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("DefaultLocale")
             @Override
             public void onClick(View v) {
+                // if spinners are in default value, then we can't proceed
                 if (initialType.equals("Select currency…") || targetType.equals("Select currency…")) {
                     Toast toast = Toast.makeText(getActivity(), "Select currencies…", Toast.LENGTH_SHORT);
                     toast.show();
-                } else {
+                } else { // if there is no input we cannot proceed
                     if ((op1Text.getText().toString().equals("") ||
                             op1Text.getText().toString().equals(".") ||
                             op2Text.getText().toString().equals("") ||
@@ -163,6 +171,7 @@ public class CalculatorFragment extends Fragment {
             }
         });
 
+        // at the end of intializing we grab prefs and fill out the app using them
 
         int initialSpinnerPosition = initialAdapter.getPosition(settings.getString(INPUT_SPINNER2, initialType));
         initialSpinner.setSelection(initialSpinnerPosition);
@@ -183,6 +192,7 @@ public class CalculatorFragment extends Fragment {
 
     }//end onCreateView
 
+    // API call then calculates and displays the changes
     private void calculate(final String from, final String to, final float first, final float second) {
 
         String url = "http://data.fixer.io/api/latest?access_key="
@@ -205,6 +215,10 @@ public class CalculatorFragment extends Fragment {
 
                             JSONObject element = response.getJSONObject("rates");
 
+                            // Get conversion rate to EURO's from both of the currencies
+                            // then we divide the first one by 1 so we get the rate from EURO's to the currency
+                            // next we multiply the number we started with by that number to get it into the second units
+                            // if the symbol was + we add, if - we subtract
 
                             float baseInitial = Float.parseFloat(element.getString(from));
                             float baseResult = Float.parseFloat(element.getString(to));
@@ -239,6 +253,8 @@ public class CalculatorFragment extends Fragment {
         requestQueue.add(jsonObjectRequest);
     }
 
+
+    // save instance
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -250,6 +266,7 @@ public class CalculatorFragment extends Fragment {
         outState.putString(SYMBOL_T2, symbol);
     }
 
+    // on pause
     @Override
     public void onPause() {
         super.onPause();
